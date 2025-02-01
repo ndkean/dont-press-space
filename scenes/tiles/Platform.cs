@@ -20,7 +20,7 @@ public partial class Platform : Node2D
 	private bool _movingTowards1;
 
 	private Vector2 _oneToTwoDir;
-	private Vector2 _oneToTwo;
+	private float _totalDistance;
 
 	public override void _Ready()
 	{
@@ -30,8 +30,9 @@ public partial class Platform : Node2D
 		Debug.Assert(_position1 != null, "Position 1 should not be null");
 		Debug.Assert(_position2 != null, "Position 2 should not be null");
 		
-		_oneToTwo = _position2.Position - _position1.Position;
-		_oneToTwoDir = _oneToTwo.Normalized();
+		Vector2 oneToTwo = _position2.Position - _position1.Position;
+		_oneToTwoDir = oneToTwo.Normalized();
+		_totalDistance = oneToTwo.Length();
 	}
 
 	public override void _Process(double delta)
@@ -43,19 +44,19 @@ public partial class Platform : Node2D
 	public override void _PhysicsProcess(double delta)
 	{
 		if (Engine.IsEditorHint()) return;
-		
-		float distancePercentage = (Position - _position1.Position).Length() / _oneToTwo.Length();
-		
+
 		if (_movingTowards1)
 		{
 			Position -= _oneToTwoDir * _speed;
-			if (distancePercentage <= 0)
+			if (_position2.GlobalPosition.DistanceTo(GlobalPosition) > _totalDistance)
+			// if (_position1.GlobalPosition.DistanceTo(GlobalPosition) < epsilon)
 				_movingTowards1 = false;
 		}
 		else
 		{
 			Position += _oneToTwoDir * _speed;
-			if (distancePercentage >= 1)
+			if (_position1.GlobalPosition.DistanceTo(GlobalPosition) > _totalDistance)
+			// if (_position2.GlobalPosition.DistanceTo(GlobalPosition) < epsilon)
 				_movingTowards1 = true;
 		}
 	}
@@ -63,7 +64,7 @@ public partial class Platform : Node2D
 	private void UpdatePosition()
 	{
 		if (_position1 == null || _position2 == null) return;
-		
-		Position = _position1.Position + _oneToTwo * _startingDistance;
+		Vector2 oneToTwo = _position2.Position - _position1.Position;
+		Position = _position1.Position + oneToTwo * _startingDistance;
 	}
 }

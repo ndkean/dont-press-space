@@ -86,8 +86,8 @@ public partial class DrillGuy : CharacterBody2D, IDies
 	public override void _PhysicsProcess(double delta)
 	{
 		float d = (float)delta;
-		bool attacking = IsAttacking();
-		// GD.Print($"Winding up: {!_attackWindupTimer.IsStopped()} Attacking: {!_attackTimer.IsStopped()} Resetting: {!_attackResetTimer.IsStopped()}");
+		bool attacking = !_attackTimer.IsStopped();
+		
 		if (!attacking)
 		{
 			if (!IsOnFloor())
@@ -96,7 +96,7 @@ public partial class DrillGuy : CharacterBody2D, IDies
 			}
 			else
 			{
-				if (_attackResetTimer.IsStopped())
+				if (_attackResetTimer.IsStopped() && _attackWindupTimer.IsStopped())
 				{
 					if (PlayerVisible())
 					{
@@ -115,7 +115,7 @@ public partial class DrillGuy : CharacterBody2D, IDies
 				}
 				else
 				{
-					Velocity = Vector2.Zero;
+					Velocity = new Vector2(0, Velocity.Y);
 				}
 			}
 		}
