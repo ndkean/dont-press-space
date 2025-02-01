@@ -1,10 +1,13 @@
 using Godot;
 using System;
 
-public partial class PlayerController : CharacterBody2D
+public partial class PlayerController : CharacterBody2D, IPicksUpCollectables
 {
 	[Export] private float _speed;
 	[Export] private float _jumpVelocity;
+
+	[Export] private JumpManager _jumpManager;
+	[Export] private HealthManager _healthManager;
 
 	public override void _PhysicsProcess(double delta)
 	{
@@ -17,9 +20,10 @@ public partial class PlayerController : CharacterBody2D
 		}
 
 		// Handle Jump.
-		if (Input.IsActionJustPressed("jump") && IsOnFloor())
+		if (Input.IsActionJustPressed("jump") && IsOnFloor() && _jumpManager.CanJump)
 		{
 			velocity.Y = -_jumpVelocity;
+			_jumpManager.OnJump();
 		}
 
 		// Get the input direction and handle the movement/deceleration.
@@ -36,5 +40,22 @@ public partial class PlayerController : CharacterBody2D
 
 		Velocity = velocity;
 		MoveAndSlide();
+	}
+
+	public bool ReceiveCollectable(Collectable collectable)
+	{
+		switch (collectable.Type)
+		{
+			case CollectableType.Health:
+				if (_healthManager.Health == _healthManager.MaxHealth) return false;
+				_healthManager.Health += collectable.Value;
+				break;
+			case CollectableType.Jumps:
+				_jumpManager.JumpsRemaining += collectable.Value;
+				break;
+			default: return false;
+		}
+
+		return true;
 	}
 }

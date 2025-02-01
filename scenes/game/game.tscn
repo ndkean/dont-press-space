@@ -1,0 +1,36 @@
+[gd_scene load_steps=4 format=4 uid="uid://h4cywu1umi8i"]
+
+[ext_resource type="TileSet" uid="uid://ci3s3lg8ehrm6" path="res://data/tile_set.tres" id="1_xnild"]
+[ext_resource type="PackedScene" uid="uid://ctdvgdafoongc" path="res://scenes/player/player.tscn" id="2_0umx3"]
+[ext_resource type="Script" path="res://scenes/tiles/Platform.cs" id="3_4qw0x"]
+
+[node name="Game" type="Node2D"]
+texture_filter = 1
+
+[node name="TileMap" type="Node2D" parent="."]
+
+[node name="Foreground" type="TileMapLayer" parent="TileMap"]
+tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAACAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAGAAAAAAAAAAAAAAAHAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAJAAAAAAAAAAAAAAAKAAAAAAAAAAAAAAALAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAANAAAAAAAAAAAAAAAOAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAARAAAAAAAAAAAAAAASAAAAAAAAAAAAAAATAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAAVAAAAAAAAAAAAAAAWAAAAAAAAAAAAAAAXAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAD//wAAAAAAAAAAAAD+/wAAAAAAAAAAAAD9/wAAAAAAAAAAAAD9////AAAAAAAAAAD9//7/AAAAAAAAAAD9//3/AAAAAAAAAAD9//z/AAAAAAAAAAD9//v/AAAAAAAAAAD9//r/AAAAAAAAAAD9//n/AAAAAAAAAAD9//j/AAAAAAAAAAADAP//AQAAAAAAAQAEAP//AQAAAAAAAQAGAP//AQAAAAAAAgA=")
+tile_set = ExtResource("1_xnild")
+
+[node name="Player" parent="." instance=ExtResource("2_0umx3")]
+z_index = 1
+
+[node name="Platform" type="Node2D" parent="." node_paths=PackedStringArray("_position1", "_position2")]
+position = Vector2(-9, -9)
+script = ExtResource("3_4qw0x")
+_speed = 1.0
+_position1 = NodePath("Position1")
+_position2 = NodePath("Position2")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="Platform"]
+tile_map_data = PackedByteArray("AAD//wAAAAABAAAAAAAAAAAAAAABAAAAAAABAAAAAAABAAAAAAA=")
+tile_set = ExtResource("1_xnild")
+
+[node name="Position1" type="Node2D" parent="Platform"]
+top_level = true
+position = Vector2(93, -48)
+
+[node name="Position2" type="Node2D" parent="Platform"]
+top_level = true
+position = Vector2(28, -49)

@@ -1,0 +1,67 @@
+[gd_scene load_steps=9 format=3 uid="uid://ctdvgdafoongc"]
+
+[ext_resource type="Script" path="res://scenes/player/PlayerController.cs" id="1_m7qek"]
+[ext_resource type="PackedScene" uid="uid://cpcpn1v3vxi7e" path="res://scenes/player/ui/player_ui.tscn" id="2_f2vnm"]
+[ext_resource type="Texture2D" uid="uid://d2441uchj2lv" path="res://sprites/player.png" id="2_ftbsg"]
+[ext_resource type="Script" path="res://scenes/player/JumpManager.cs" id="3_0kquc"]
+[ext_resource type="Script" path="res://scenes/player/HitDetector.cs" id="4_di4ki"]
+[ext_resource type="Script" path="res://scenes/player/HealthManager.cs" id="5_khqeu"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bbd6t"]
+radius = 8.0
+height = 32.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ko1op"]
+radius = 9.0
+height = 33.0
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("_jumpManager", "_healthManager")]
+collision_layer = 2
+script = ExtResource("1_m7qek")
+_speed = 100.0
+_jumpVelocity = 300.0
+_jumpManager = NodePath("JumpManager")
+_healthManager = NodePath("HealthManager")
+
+[node name="UI" parent="." instance=ExtResource("2_f2vnm")]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -16)
+texture = ExtResource("2_ftbsg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -16)
+shape = SubResource("CapsuleShape2D_bbd6t")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(0, -48)
+zoom = Vector2(4, 4)
+
+[node name="JumpManager" type="Node" parent="."]
+script = ExtResource("3_0kquc")
+_startingJumps = 5
+
+[node name="HealthManager" type="Node" parent="."]
+script = ExtResource("5_khqeu")
+_startingHealth = 3
+MaxHealth = 3
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_mask = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -16)
+shape = SubResource("CapsuleShape2D_ko1op")
+debug_color = Color(0, 0.532717, 0.982166, 0.42)
+
+[node name="HitDetector" type="Node" parent="Area2D/CollisionShape2D" node_paths=PackedStringArray("_area")]
+script = ExtResource("4_di4ki")
+_area = NodePath("../..")
+_damageMask = 4
+_invincibilityDuration = 2.0
+
+[connection signal="JumpsRemainingChanged" from="JumpManager" to="UI/Control/VBoxContainer/JumpCount" method="OnJumpsRemainingChanged"]
+[connection signal="HealthChanged" from="HealthManager" to="UI/Control/VBoxContainer/HealthCounter" method="HealthChanged"]
+[connection signal="Hit" from="Area2D/CollisionShape2D/HitDetector" to="HealthManager" method="OnHit"]
+
+[editable path="UI"]

@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://dh7k1t67naowu"]
+
+[ext_resource type="Texture2D" uid="uid://fv38lo3fspp7" path="res://sprites/scene_tiles.png" id="1_y4xvo"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7bbwc"]
+atlas = ExtResource("1_y4xvo")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2qtk3"]
+size = Vector2(16, 12)
+
+[node name="Spikes" type="StaticBody2D"]
+texture_filter = 1
+collision_layer = 5
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_7bbwc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_2qtk3")
+debug_color = Color(0.992328, 0, 0.253559, 0.42)

@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://pvr6x2y05yps"]
+
+[ext_resource type="Script" path="res://scenes/tiles/JumpPad.cs" id="1_2w4gw"]
+[ext_resource type="Texture2D" uid="uid://fv38lo3fspp7" path="res://sprites/scene_tiles.png" id="2_uggl3"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d02ya"]
+atlas = ExtResource("2_uggl3")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_imb1x"]
+size = Vector2(16, 10)
+
+[node name="JumpPad" type="Node2D" node_paths=PackedStringArray("_area")]
+script = ExtResource("1_2w4gw")
+_area = NodePath("Area2D")
+_impulse = 500.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_d02ya")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, 3)
+shape = SubResource("RectangleShape2D_imb1x")

@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://boe78f07sskfx"]
+
+[ext_resource type="Script" path="res://scenes/collectables/Collectable.cs" id="1_wwmjk"]
+[ext_resource type="Texture2D" uid="uid://ojhhlsr1mren" path="res://sprites/collectables.png" id="2_ni267"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lg8wc"]
+atlas = ExtResource("2_ni267")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rkwvx"]
+
+[node name="HealthPickup" type="Node2D"]
+script = ExtResource("1_wwmjk")
+Value = 1
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(8, -8)
+texture = SubResource("AtlasTexture_lg8wc")
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(8, -8)
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_rkwvx")
