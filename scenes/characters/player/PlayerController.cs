@@ -1,13 +1,25 @@
 using Godot;
 using System;
 
-public partial class PlayerController : CharacterBody2D, IPicksUpCollectables
+public partial class PlayerController : CharacterBody2D, IPicksUpCollectables, IDies
 {
+	public static PlayerController Player { get; private set; }
+
 	[Export] private float _speed;
-	[Export] private float _jumpVelocity;
+	[Export] private float _jumpHeight;
+	[Export] private float _hitDefaultKnockback = 100;
+
+	private float JumpVelocity => Mathf.Sqrt(2 * GetGravity().Y * _jumpHeight);
+
+	[Export] private CollisionShape2D _collisionShape;
 
 	[Export] private JumpManager _jumpManager;
 	[Export] private HealthManager _healthManager;
+
+	public override void _EnterTree()
+	{
+		Player = this;
+	}
 
 	public override void _PhysicsProcess(double delta)
 	{
@@ -22,7 +34,7 @@ public partial class PlayerController : CharacterBody2D, IPicksUpCollectables
 		// Handle Jump.
 		if (Input.IsActionJustPressed("jump") && IsOnFloor() && _jumpManager.CanJump)
 		{
-			velocity.Y = -_jumpVelocity;
+			velocity.Y = -JumpVelocity;
 			_jumpManager.OnJump();
 		}
 
@@ -57,5 +69,19 @@ public partial class PlayerController : CharacterBody2D, IPicksUpCollectables
 		}
 
 		return true;
+	}
+
+	public void Kill()
+	{
+		GetTree().CallDeferred("reload_current_scene");
+	}
+
+	public void OnHitReceived(Hurtbox hurtbox)
+	{
+		Vector2 direction = (_collisionShape.GlobalPosition - hurtbox.GlobalPosition).Normalized();
+		Vector2 vec = direction * hurtbox.KnockbackMagnitude + new Vector2(0, -_hitDefaultKnockback);
+		Velocity = Velocity with {
+			X = Velocity.X + vec.X, Y = vec.Y
+		};
 	}
 }

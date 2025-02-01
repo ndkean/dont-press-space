@@ -13,7 +13,7 @@ size = Vector2(16, 10)
 [node name="JumpPad" type="Node2D" node_paths=PackedStringArray("_area")]
 script = ExtResource("1_2w4gw")
 _area = NodePath("Area2D")
-_impulse = 500.0
+_jumpHeight = 112.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = SubResource("AtlasTexture_d02ya")

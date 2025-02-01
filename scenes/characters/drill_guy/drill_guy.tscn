@@ -1,0 +1,291 @@
+[gd_scene load_steps=16 format=3 uid="uid://ccuwt7f10osq3"]
+
+[ext_resource type="Script" path="res://scenes/characters/drill_guy/DrillGuy.cs" id="1_6wf6d"]
+[ext_resource type="Texture2D" uid="uid://chlyl80pujolj" path="res://sprites/drill_guy.png" id="2_5m5xu"]
+[ext_resource type="Script" path="res://scenes/Hurtbox.cs" id="3_djjgs"]
+[ext_resource type="PackedScene" uid="uid://diarwmv1a87aj" path="res://scenes/characters/hitbox.tscn" id="4_q5gwt"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ydrxa"]
+atlas = ExtResource("2_5m5xu")
+region = Rect2(32, 16, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xwd5j"]
+atlas = ExtResource("2_5m5xu")
+region = Rect2(0, 0, 16, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_yar5q"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ydrxa")
+}],
+"loop": true,
+"name": &"drilling",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xwd5j")
+}],
+"loop": true,
+"name": &"upright",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gj2no"]
+radius = 6.0
+height = 32.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mq03i"]
+radius = 6.0
+height = 28.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_nu0an"]
+radius = 6.0
+height = 18.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_d3irf"]
+radius = 7.0
+height = 20.0
+
+[sub_resource type="Animation" id="Animation_hv2i5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"upright"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("UprightShape:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("UprightHurtbox:Enabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("DrillingShape:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("DrillingHurtbox:Enabled")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_ak2jn"]
+resource_name = "drilling"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"drilling"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DrillingShape:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("DrillingHurtbox:Enabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_yx50o"]
+resource_name = "upright"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"upright"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("UprightShape:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("UprightHurtbox:Enabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8ysp3"]
+_data = {
+"RESET": SubResource("Animation_hv2i5"),
+"drilling": SubResource("Animation_ak2jn"),
+"upright": SubResource("Animation_yx50o")
+}
+
+[node name="DrillGuy" type="CharacterBody2D" node_paths=PackedStringArray("_attackWindupTimer", "_attackTimer", "_attackResetTimer")]
+collision_layer = 2
+script = ExtResource("1_6wf6d")
+_wanderingSpeed = 50.0
+_attackWindupTimer = NodePath("AttackWindupTimer")
+_attackTimer = NodePath("AttackTimer")
+_attackResetTimer = NodePath("AttackResetTimer")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -16)
+sprite_frames = SubResource("SpriteFrames_yar5q")
+animation = &"upright"
+
+[node name="UprightShape" type="CollisionShape2D" parent="."]
+position = Vector2(0, -16)
+shape = SubResource("CapsuleShape2D_gj2no")
+disabled = true
+
+[node name="DrillingShape" type="CollisionShape2D" parent="."]
+position = Vector2(-1, -16)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_mq03i")
+disabled = true
+
+[node name="UprightHurtbox" type="Area2D" parent="."]
+position = Vector2(0, -16)
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("3_djjgs")
+Damage = 1
+Enabled = false
+Mask = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UprightHurtbox"]
+position = Vector2(0, -7)
+shape = SubResource("CapsuleShape2D_nu0an")
+debug_color = Color(1, 0, 0, 0.419608)
+
+[node name="DrillingHurtbox" type="Area2D" parent="."]
+position = Vector2(0, -16)
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("3_djjgs")
+Damage = 1
+Enabled = false
+Mask = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DrillingHurtbox"]
+position = Vector2(5, 0)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_nu0an")
+debug_color = Color(1, 0, 0, 0.419608)
+
+[node name="Hitbox" parent="." instance=ExtResource("4_q5gwt")]
+Type = 1
+
+[node name="CollisionShape2D" parent="Hitbox" index="0"]
+position = Vector2(0, -9)
+shape = SubResource("CapsuleShape2D_d3irf")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_8ysp3")
+}
+
+[node name="Rays" type="Node2D" parent="."]
+
+[node name="FloorRay" type="RayCast2D" parent="Rays"]
+position = Vector2(9, -10)
+target_position = Vector2(0, 16)
+
+[node name="WallRay" type="RayCast2D" parent="Rays"]
+position = Vector2(6, -10)
+target_position = Vector2(4, 0)
+
+[node name="LOSRay" type="RayCast2D" parent="."]
+target_position = Vector2(0, 0)
+
+[node name="AttackWindupTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="AttackTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="AttackResetTimer" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
+
+[connection signal="HitReceived" from="Hitbox" to="." method="OnHitReceived"]
+
+[editable path="Hitbox"]

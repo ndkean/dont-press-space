@@ -1,8 +1,10 @@
-[gd_resource type="TileSet" load_steps=6 format=3 uid="uid://ci3s3lg8ehrm6"]
+[gd_resource type="TileSet" load_steps=8 format=3 uid="uid://ci3s3lg8ehrm6"]
 
 [ext_resource type="Texture2D" uid="uid://bf66tbe4f7cvj" path="res://sprites/tiles.png" id="1_o8cja"]
 [ext_resource type="PackedScene" uid="uid://dh7k1t67naowu" path="res://scenes/tiles/spikes.tscn" id="2_rc42v"]
 [ext_resource type="PackedScene" uid="uid://pvr6x2y05yps" path="res://scenes/tiles/jump_pad.tscn" id="3_as5yf"]
+[ext_resource type="PackedScene" uid="uid://boe78f07sskfx" path="res://scenes/collectables/health_pickup.tscn" id="4_afo87"]
+[ext_resource type="PackedScene" uid="uid://n35xge5oueav" path="res://scenes/collectables/jump_pickup.tscn" id="5_a3j47"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0ow8b"]
 texture = ExtResource("1_o8cja")
@@ -15,6 +17,8 @@ texture = ExtResource("1_o8cja")
 resource_name = "scenes"
 scenes/1/scene = ExtResource("2_rc42v")
 scenes/2/scene = ExtResource("3_as5yf")
+scenes/3/scene = ExtResource("4_afo87")
+scenes/4/scene = ExtResource("5_a3j47")
 
 [resource]
 physics_layer_0/collision_layer = 1

@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://diarwmv1a87aj"]
+
+[ext_resource type="Script" path="res://scenes/characters/Hitbox.cs" id="1_vj3tw"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_m3jm4"]
+radius = 7.0
+height = 31.0
+
+[node name="Hitbox" type="Area2D"]
+collision_layer = 8
+collision_mask = 4
+script = ExtResource("1_vj3tw")
+_invincibilityDuration = 2.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -15)
+shape = SubResource("CapsuleShape2D_m3jm4")
+debug_color = Color(0.864209, 0.357529, 5.77569e-07, 0.42)

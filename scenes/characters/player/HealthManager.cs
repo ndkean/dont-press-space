@@ -13,11 +13,17 @@ public partial class HealthManager : Node
 		{
 			_health = Mathf.Clamp(value, 0, MaxHealth);
 			EmitSignal(SignalName.HealthChanged, Health);
+
+			if (_health <= 0)
+				EmitSignal(SignalName.HealthDepleted);
 		}
 	}
 
 	[Signal]
 	public delegate void HealthChangedEventHandler(int health);
+
+	[Signal]
+	public delegate void HealthDepletedEventHandler();
 
 	public override void _EnterTree()
 	{
@@ -29,8 +35,8 @@ public partial class HealthManager : Node
 		EmitSignal(SignalName.HealthChanged, Health);
 	}
 
-	public void OnHit()
+	public void OnHitReceived(Hurtbox hurtbox)
 	{
-		Health--;
+		Health -= hurtbox.Damage;
 	}
 }

@@ -11,6 +11,7 @@ config_version=5
 [application]
 
 config/name="Don't Press Space"
+run/main_scene="res://scenes/game/game.tscn"
 config/features=PackedStringArray("4.3", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -44,4 +45,5 @@ move_right={
 
 2d_physics/layer_1="Tiles"
 2d_physics/layer_2="Characters"
-2d_physics/layer_3="Damage"
+2d_physics/layer_3="Hurtbox"
+2d_physics/layer_4="Hitbox"

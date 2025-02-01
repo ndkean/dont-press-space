@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://br3u5v3e3x4au"]
+
+[ext_resource type="Script" path="res://scenes/tiles/Platform.cs" id="1_mrxje"]
+[ext_resource type="TileSet" uid="uid://ci3s3lg8ehrm6" path="res://data/tile_set.tres" id="2_8l1n2"]
+
+[node name="Platform" type="Node2D"]
+
+[node name="Tiles" type="Node2D" parent="."]
+script = ExtResource("1_mrxje")
+_speed = 1.0
+
+[node name="TileMapLayer" type="TileMapLayer" parent="Tiles"]
+tile_map_data = PackedByteArray(0, 0, 255, 255, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0)
+tile_set = ExtResource("2_8l1n2")
+use_kinematic_bodies = true
+
+[node name="Position1" type="Node2D" parent="."]
+
+[node name="Position2" type="Node2D" parent="."]

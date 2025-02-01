@@ -1,0 +1,71 @@
+[gd_scene load_steps=11 format=3 uid="uid://ctdvgdafoongc"]
+
+[ext_resource type="Script" path="res://scenes/characters/player/PlayerController.cs" id="1_m7qek"]
+[ext_resource type="PackedScene" uid="uid://cpcpn1v3vxi7e" path="res://scenes/characters/player/ui/player_ui.tscn" id="2_f2vnm"]
+[ext_resource type="Texture2D" uid="uid://d2441uchj2lv" path="res://sprites/player.png" id="2_ftbsg"]
+[ext_resource type="Script" path="res://scenes/characters/player/JumpManager.cs" id="3_0kquc"]
+[ext_resource type="Shader" path="res://scenes/characters/player/hit_flash.gdshader" id="3_hikfe"]
+[ext_resource type="Script" path="res://scenes/characters/player/HitFlash.cs" id="4_5hj3h"]
+[ext_resource type="Script" path="res://scenes/characters/player/HealthManager.cs" id="5_khqeu"]
+[ext_resource type="PackedScene" uid="uid://diarwmv1a87aj" path="res://scenes/characters/hitbox.tscn" id="8_60jfu"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_356xg"]
+shader = ExtResource("3_hikfe")
+shader_parameter/active = false
+shader_parameter/hit_color = Color(1, 1, 1, 1)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bbd6t"]
+radius = 6.0
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("_collisionShape", "_jumpManager", "_healthManager")]
+collision_layer = 2
+script = ExtResource("1_m7qek")
+_speed = 100.0
+_jumpHeight = 56.0
+_collisionShape = NodePath("CollisionShape2D")
+_jumpManager = NodePath("JumpManager")
+_healthManager = NodePath("HealthManager")
+
+[node name="UI" parent="." instance=ExtResource("2_f2vnm")]
+
+[node name="Visuals" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Visuals"]
+material = SubResource("ShaderMaterial_356xg")
+position = Vector2(0, -16)
+texture = ExtResource("2_ftbsg")
+
+[node name="Hitflash" type="Node" parent="Visuals/Sprite2D"]
+script = ExtResource("4_5hj3h")
+_initialFlashDuration = 0.25
+_invincibilityFlashDuration = 0.15
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -15)
+shape = SubResource("CapsuleShape2D_bbd6t")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(0, -32)
+zoom = Vector2(4, 4)
+
+[node name="JumpManager" type="Node" parent="."]
+script = ExtResource("3_0kquc")
+_startingJumps = 5
+
+[node name="HealthManager" type="Node" parent="."]
+script = ExtResource("5_khqeu")
+_startingHealth = 3
+MaxHealth = 3
+
+[node name="Hitbox" parent="." instance=ExtResource("8_60jfu")]
+
+[connection signal="JumpsRemainingChanged" from="JumpManager" to="UI/Control/VBoxContainer/JumpCount" method="OnJumpsRemainingChanged"]
+[connection signal="HealthChanged" from="HealthManager" to="UI/Control/VBoxContainer/HealthCounter" method="HealthChanged"]
+[connection signal="HealthDepleted" from="HealthManager" to="." method="Kill"]
+[connection signal="HitReceived" from="Hitbox" to="." method="OnHitReceived"]
+[connection signal="HitReceived" from="Hitbox" to="Visuals/Sprite2D/Hitflash" method="OnHit"]
+[connection signal="HitReceived" from="Hitbox" to="HealthManager" method="OnHitReceived"]
+[connection signal="InvincibleStateChanged" from="Hitbox" to="Visuals/Sprite2D/Hitflash" method="OnInvincibilityStateChanged"]
+
+[editable path="UI"]
+[editable path="Hitbox"]
